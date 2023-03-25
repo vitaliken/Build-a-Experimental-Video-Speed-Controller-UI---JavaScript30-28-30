@@ -12,7 +12,7 @@
     <div class="wrapper">
         <video class="flex" width="765" height="430" src="4th dimension kids see ghost.mp4" loop controls></video>
         <div class="speed">
-            <div class="speed-bar">1×</div>
+            <div class="speed-bar">1x</div>
         </div>
     </div>
 
@@ -21,6 +21,23 @@
         const speed = document.querySelector('.speed');
         const bar = speed.querySelector('.speed-bar');
         const video = document.querySelector('.flex');
+
+        speed.addEventListener('mousemove', function (e) {
+            //реальное начало ползунка с учетом возможных отступов:
+            const y = e.pageY - this.offsetTop;
+            const percent = y / this.offsetHeight;
+            const min = 0.4;
+            const max = 4;
+            //приводит в вид с процентами:
+            const height = Math.round(percent * 100) + '%';
+            //слежение ползунка за мышью:
+            bar.style.height = height;
+            //отображение скорости в ползунке
+            const playbackRate = percent * (max - min) + min;
+            bar.textContent = playbackRate.toFixed(2) + 'x';
+            //применение скорости к видео:
+            video.playbackRate = playbackRate;
+        })
 
     </script>
 </body>
